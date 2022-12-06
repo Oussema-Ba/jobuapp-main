@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:jobuapp/providers/data_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:jobuapp/constants/style.dart';
 import 'package:jobuapp/providers/app_provider.dart';
@@ -16,8 +17,8 @@ class _SearchWidgetState extends State<SearchWidget> {
   @override
   void initState() {
     super.initState();
-    // Future.delayed(const Duration(milliseconds: 50))
-    //     .then((value) => context.read<DataProvider>().clearSearch(context));
+    Future.delayed(const Duration(milliseconds: 50))
+        .then((value) => context.read<DataProvider>().clearSearch(context));
   }
 
   @override
@@ -37,9 +38,9 @@ class _SearchWidgetState extends State<SearchWidget> {
       child: Center(
         child: TextFormField(
           onFieldSubmitted: (val) {},
-          // controller: context.watch<DataProvider>().searchController,
-          onChanged: (String value) => log(''),
-          // context.read<DataProvider>().updateSearch(value),
+          controller: context.watch<DataProvider>().searchController,
+          onChanged: (String value) =>
+              context.read<DataProvider>().updateSearch(value),
           autovalidateMode: AutovalidateMode.onUserInteraction,
           style: style.text18,
           decoration: InputDecoration(
@@ -62,9 +63,10 @@ class _SearchWidgetState extends State<SearchWidget> {
               Icons.search,
               color: style.invertedColor,
             ),
-            suffixIcon: true
+            suffixIcon: context.watch<DataProvider>().search.isNotEmpty
                 ? InkWell(
-                    onTap: () => log('clear search'),
+                    onTap: () =>
+                        context.read<DataProvider>().clearSearch(context),
                     child: Icon(
                       Icons.close,
                       color: style.invertedColor,

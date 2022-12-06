@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:jobuapp/providers/data_provider.dart';
+import 'package:jobuapp/views/home/widgets/service_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:jobuapp/views/search/widgets/profile_card.dart';
 import 'package:jobuapp/views/search/widgets/search_widget.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -15,23 +16,20 @@ class SearchScreen extends StatelessWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
-          children: const [
-            SearchWidget(),
-            // false
-            //     ? SizedBox(
-            //         width: size.width * 0.91,
-            //         child: Column(
-            //           children: context
-            //               .watch<DataProvider>()
-            //               .searchUsers
-            //               .map((user) => UserCard(
-            //                     user: user,
-            //                   ))
-            //               .toList(),
-            //         ),
-            //       )
-            //:
-            SizedBox()
+          children: [
+            const SearchWidget(),
+            SizedBox(
+              width: size.width * 0.91,
+              child: Column(
+                children: context
+                    .watch<DataProvider>()
+                    .searchUsers
+                    .map((servie) => ServiceWidget(
+                          service: servie,
+                        ))
+                    .toList(),
+              ),
+            )
           ],
         ),
       ),

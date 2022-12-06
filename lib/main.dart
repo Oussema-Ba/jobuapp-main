@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:jobuapp/firebase_options.dart';
 import 'package:jobuapp/providers/app_provider.dart';
 import 'package:jobuapp/providers/auth_provider.dart';
+import 'package:jobuapp/providers/data_provider.dart';
 import 'package:jobuapp/providers/state_provider.dart';
 import 'package:jobuapp/providers/user_provider.dart';
 import 'package:jobuapp/services/shared_data.dart';
@@ -29,6 +30,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => DataProvider()),
         ChangeNotifierProvider(create: (_) => StateProvider())
       ],
       child: const MyApp(),
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Jobu App',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/formcond',
+      initialRoute: '/index',
       routes: {
         '/index': (context) => const IndexScreen(),
         '/login': (context) => const LoginScreen(),

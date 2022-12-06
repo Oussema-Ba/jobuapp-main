@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jobuapp/services/data_service.dart';
+import 'package:jobuapp/views/home/widgets/service_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:jobuapp/constants/style.dart';
 import 'package:jobuapp/models/user.dart';
@@ -120,141 +122,25 @@ class PublicProfileScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  context
-                          .watch<UserProvider>()
-                          .currentUser!
-                          .baned
-                          .contains(user.id!)
-                      ? primaryButton(
-                          context: context,
-                          height: 50,
-                          width: 150,
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(12),
-                          widget: context.watch<UserProvider>().isLoading
-                              ? const Center(
-                                  child: SizedBox(
-                                    height: 30,
-                                    width: 30,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 3,
-                                    ),
-                                  ),
-                                )
-                              : Txt(
-                                  text: !context
-                                          .watch<UserProvider>()
-                                          .currentUser!
-                                          .followed
-                                          .contains(user.id!)
-                                      ? "Follow"
-                                      : "Unfollow",
-                                  style: text18white),
-                        )
-                      : !context
-                              .watch<UserProvider>()
-                              .currentUser!
-                              .sentRequest
-                              .contains(user.id!)
-                          ? primaryButton(
-                              context: context,
-                              height: 50,
-                              width: 150,
-                              color: primaryColor,
-                              borderRadius: BorderRadius.circular(12),
-                              widget: context.watch<UserProvider>().isLoading
-                                  ? const Center(
-                                      child: SizedBox(
-                                        height: 30,
-                                        width: 30,
-                                        child: CircularProgressIndicator(
-                                          color: Colors.white,
-                                          strokeWidth: 3,
-                                        ),
-                                      ),
-                                    )
-                                  : Txt(text: "Follow", style: text18white),
-                              function: () => context
-                                  .read<UserProvider>()
-                                  .addRequest(context, user.id!))
-                          : primaryButton(
-                              context: context,
-                              height: 50,
-                              width: 150,
-                              color: primaryColor,
-                              borderRadius: BorderRadius.circular(12),
-                              widget: context.watch<UserProvider>().isLoading
-                                  ? const Center(
-                                      child: SizedBox(
-                                        height: 30,
-                                        width: 30,
-                                        child: CircularProgressIndicator(
-                                          color: Colors.white,
-                                          strokeWidth: 3,
-                                        ),
-                                      ),
-                                    )
-                                  : Txt(text: "Requested", style: text18white),
-                              function: () => context
-                                  .read<UserProvider>()
-                                  .removeRequest(context,
-                                      sender: context
-                                          .read<UserProvider>()
-                                          .currentUser!,
-                                      user: user.id!)),
-                  !context
-                          .watch<UserProvider>()
-                          .currentUser!
-                          .baned
-                          .contains(user.id!)
-                      ? primaryButton(
-                          context: context,
-                          height: 50,
-                          width: 150,
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(12),
-                          widget: context.watch<UserProvider>().isLoadingSecond
-                              ? const Center(
-                                  child: SizedBox(
-                                    height: 30,
-                                    width: 30,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 3,
-                                    ),
-                                  ),
-                                )
-                              : Txt(text: "Block", style: text18white),
-                          function: () => context
-                              .read<UserProvider>()
-                              .addBlock(context, user.id!))
-                      : primaryButton(
-                          context: context,
-                          height: 50,
-                          width: 150,
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(12),
-                          widget: context.watch<UserProvider>().isLoadingSecond
-                              ? const Center(
-                                  child: SizedBox(
-                                    height: 30,
-                                    width: 30,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 3,
-                                    ),
-                                  ),
-                                )
-                              : Txt(text: "Unblock", style: text18white),
-                          function: () => context
-                              .read<UserProvider>()
-                              .removeBlock(context, user.id!)),
-                ],
-              )
+              FutureBuilder(
+                  future: DataService.getUserServices(user.id!),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done && snapshot.data != null) {
+                      
+                      return Column(
+                        children: snapshot.data!.map((e) => ServiceWidget(service: e)).toList(),
+                      );
+                    } else {
+                      return SizedBox(
+                        child: Center(
+                          child: Text(
+                            "This user doesn't have services",
+                            style: style.text18,
+                          ),
+                        ),
+                      );
+                    }
+                  })
             ],
           )),
     );
