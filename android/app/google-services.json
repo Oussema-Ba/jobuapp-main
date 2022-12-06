@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "456988502790",
+    "project_id": "jobuapp-96b99",
+    "storage_bucket": "jobuapp-96b99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456988502790:android:6b8f491088729d1591cc87",
+        "android_client_info": {
+          "package_name": "com.example.jobuapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "456988502790-q8e783qfqk1hr343ui51pgt306tjlffr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4vfkPcEHtubEbU5jaJux6DMAPYS0KX_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "456988502790-q8e783qfqk1hr343ui51pgt306tjlffr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
